@@ -18,7 +18,7 @@ public class CustomUserDAO {
         try {
             Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(user);
+            session.merge(user);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -29,18 +29,27 @@ public class CustomUserDAO {
         }
     }
     public void editUser(CustomUser user) {
-        Session s = sessionFactory.openSession();
-        Transaction t = s.beginTransaction();
-        s.merge(user);
-        t.commit();
-        s.close();
+        try {
+            Session s = sessionFactory.openSession();
+            Transaction t = s.beginTransaction();
+            s.merge(user);
+            t.commit();
+            s.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public void deleteUser(CustomUser user){
-        Session s = sessionFactory.openSession();
-        Transaction t = s.beginTransaction();
-        s.delete(user);
-        t.commit();
-        s.close();
+        try {
+            Session s = sessionFactory.openSession();
+            Transaction t = s.beginTransaction();
+            s.remove(user);
+            t.commit();
+            s.close();
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
     }
 
     public CustomUser findUserByEmail(String email) {

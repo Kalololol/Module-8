@@ -33,9 +33,12 @@ public class Main {
                     finish = false;
                     break;
                 case "3":
-
+                    deleteUser();
+                    finish = false;
                     break;
                 case "4":
+                    findUser();
+                    finish = false;
                     break;
                 case "0":
                     finish = true;
@@ -47,8 +50,7 @@ public class Main {
 
         }while(finish == false);
 
-
-
+        System.out.println("koniec");
 
     }
     private static void editUser(){
@@ -86,7 +88,7 @@ public class Main {
         String email = scanner.next();
         user.setEmail(email);
 
-        System.out.println("Podaj nazwisko: ");
+        System.out.println("Podaj imie: ");
         String name = scanner.next();
         user.setName(name);
 
@@ -104,7 +106,17 @@ public class Main {
     }
     private static void deleteUser() {
         CustomUserDAO dao = new CustomUserDAO();
-        CustomUser user = new CustomUser();
-        
+        System.out.println("Podaj email: ");
+        String email = scanner.next();
+        CustomUser user = dao.findUserByEmail(email);
+        dao.deleteUser(user);
+        System.out.println("Użytkownik został usunięty");
+    }
+    private static void findUser(){
+        CustomUserDAO dao = new CustomUserDAO();
+        System.out.println("Podaj adres email użytkownika");
+        String email = scanner.next();
+        CustomUser user = dao.findUserByEmail(email);
+        System.out.println(user.toString());
     }
     }
